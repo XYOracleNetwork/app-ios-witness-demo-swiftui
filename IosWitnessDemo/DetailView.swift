@@ -13,11 +13,10 @@ struct DetailView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Name: \(item.json["name"].stringValue)")
+            Text("Schema: \(item.json["schema"].stringValue)")
                 .font(.headline)
-            Text("Description: \(item.json["description"].stringValue)")
-                .font(.body)
-            
+//            Text("Description: \(item.json["description"].stringValue)")
+//                .font(.body)
             Spacer()
         }
         .padding()
