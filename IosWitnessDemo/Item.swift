@@ -1,18 +1,28 @@
-//
-//  Item.swift
-//  IosWitnessDemo
-//
-//  Created by Joel Carter on 11/13/24.
-//
-
-
 import Foundation
 import SwiftyJSON
 
 struct Item: Identifiable {
-    let id = UUID()
-    let json: JSON
-    var name: String {
+    // Using `_hash` as the unique ID
+    var id: String {
         json["_hash"].stringValue
+    }
+    
+    let json: JSON
+    
+    // Accessors for known JSON properties
+    var schema: String {
+        json["schema"].stringValue
+    }
+    
+    var hash: String {
+        json["_hash"].stringValue
+    }
+    
+    var hashAlternate: String {
+        json["_$hash"].stringValue
+    }
+    
+    var timestamp: Int {
+        json["_timestamp"].intValue
     }
 }

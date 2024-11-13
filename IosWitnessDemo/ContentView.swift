@@ -42,7 +42,7 @@ struct ContentView: View {
         NavigationView {
             List(items) { item in
                 NavigationLink(destination: DetailView(item: item)) {
-                    Text(item.name)
+                    Text(item.hash)
                 }
             }
             .navigationTitle("Witnessed Results")

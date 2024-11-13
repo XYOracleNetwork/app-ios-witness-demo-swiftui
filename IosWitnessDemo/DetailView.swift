@@ -20,7 +20,7 @@ struct DetailView: View {
             Spacer()
         }
         .padding()
-        .navigationTitle(item.name)
+        .navigationTitle(item.hash)
         .navigationBarTitleDisplayMode(.inline)
     }
 }
