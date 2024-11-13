@@ -38,17 +38,33 @@ struct ContentView: View {
         )
     ]
 
-
-    
     var body: some View {
         NavigationView {
-            List(items) { item in
-                NavigationLink(destination: DetailView(item: item)) {
-                    Text(item.hash)
-                        .lineLimit(1) // Limit to one line
-                        .truncationMode(.tail) // Truncate at the end and add "..."
-                        .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
+            VStack {
+                // List view with scrollable content
+                List(items) { item in
+                    NavigationLink(destination: DetailView(item: item)) {
+                        Text(item.hash)
+                            .lineLimit(1) // Limit to one line
+                            .truncationMode(.tail) // Truncate at the end and add "..."
+                            .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
+                    }
                 }
+                
+                Spacer()
+                
+                // Buttons fixed at the bottom
+                VStack(spacing: 20) {
+                    Button("Basic Witness") {
+                        // Action 1
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    Button("System Info Witness") {
+                        // Action 2
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                }
+                .padding(.bottom, 10)
             }
             .navigationTitle("Witnessed Results")
         }
