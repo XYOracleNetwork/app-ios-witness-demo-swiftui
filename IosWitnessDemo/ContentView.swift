@@ -52,6 +52,9 @@ struct ContentView: View {
             List(items) { item in
                 NavigationLink(destination: DetailView(item: item)) {
                     Text(item.hash)
+                        .lineLimit(1) // Limit to one line
+                        .truncationMode(.tail) // Truncate at the end and add "..."
+                        .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
                 }
             }
             .navigationTitle("Witnessed Results")
