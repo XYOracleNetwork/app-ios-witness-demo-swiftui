@@ -39,9 +39,10 @@ struct JSONView: View {
                     }
                 } else if let number = json[key].number {
                     // Display numeric values
+                    let numStr = "\(number)"
                     HStack {
                         Text("\(key):").bold()
-                        Text("\(number)")
+                        Text(numStr)
                             .lineLimit(1) // Limit to one line
                             .truncationMode(.tail) // Truncate at the end and add "..."
                             .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
