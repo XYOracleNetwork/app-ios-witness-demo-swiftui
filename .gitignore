@@ -1,0 +1,73 @@
+# macOS files
+.DS_Store
+
+# Xcode files
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+xcuserdata/
+!default.xcworkspace/contents.xcworkspacedata
+
+# Swift Package Manager
+/.build/
+.swiftpm/
+Package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+Carthage/Checkouts/
+Carthage/Build/*.framework
+
+# Archives
+*.xcarchive
+
+# Build
+build/
+*.app
+*.ipa
+*.dSYM
+*.xcframework
+*.xcdebugger
+
+# SwiftPM Xcode Integration
+.xcodeproj/*
+!*.pbxproj
+!*.xcworkspace
+!*.xcscheme
+!*.xcsettings
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Xcode Server
+.xccoverage
+.xcresult
+
+# Other
+*.moved-aside
+*.swp
+*.lock
+*.swo
+
+# Shared Scheme Files
+xcshareddata/xcschemes/*
+
+# Firebase related
+GoogleService-Info.plist
+
+# .env files
+.env*
+
+# xcframeworks
+*.xcframework
