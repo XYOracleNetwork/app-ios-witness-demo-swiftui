@@ -18,7 +18,7 @@ struct Item: Identifiable {
         json["_hash"].stringValue
     }
     
-    var hashAlternate: String {
+    var rootHash: String {
         json["_$hash"].stringValue
     }
     
