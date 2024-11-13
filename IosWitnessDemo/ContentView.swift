@@ -14,7 +14,7 @@ struct ContentView: View {
         Item(
             json: JSON([
                 "schema": "network.xyo.system.info",
-                "network": [:], // Changed {} to [:] for empty dictionary in Swift
+                "network": [:], // Empty dictionary
                 "os": [
                     "name": "macOS",
                     "version": [
@@ -35,7 +35,16 @@ struct ContentView: View {
                 "_timestamp": 1731465636489
             ])
         ),
+        Item(
+            json: JSON([
+                "schema": "network.xyo.basic",
+                "_$hash": "540756396cdc97625f245c789d56e4f26306e1fecc2d409a9a7a5ac9fcc50205",
+                "_hash": "1269b95d3ebf1b1258a82ccca0b365fabf4b8c99bf8fc852e5045e30ad20fbb1",
+                "_timestamp": 1731465636656
+            ])
+        )
     ]
+
 
     
     var body: some View {
