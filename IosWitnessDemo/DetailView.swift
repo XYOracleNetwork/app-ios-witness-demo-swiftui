@@ -7,10 +7,7 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 10) {
-                Text("Schema: \(item.json["schema"].stringValue)")
-                    .font(.headline)
-                
-                JSONView(json: item.json) // Recursive view for JSON content
+                JSONView(json: item.json)
             }
             .padding()
         }
@@ -19,59 +16,103 @@ struct DetailView: View {
     }
 }
 
-// Recursive JSONView to display JSON data
+
 struct JSONView: View {
     let json: JSON
 
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
-            // Explicitly type the keys array as [String]
-            let keys: [String] = Array(json.dictionaryValue.keys).sorted()
-            ForEach(keys, id: \.self) { (key: String) in
-                if let value = json[key].string {
-                    // Display string values
-                    HStack {
-                        Text("\(key):").bold()
-                        Text(value)
-                            .lineLimit(1) // Limit to one line
-                            .truncationMode(.tail) // Truncate at the end and add "..."
-                            .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
-                    }
-                } else if let number = json[key].number {
-                    // Display numeric values
-                    let numStr = "\(number)"
-                    HStack {
-                        Text("\(key):").bold()
-                        Text(numStr)
-                            .lineLimit(1) // Limit to one line
-                            .truncationMode(.tail) // Truncate at the end and add "..."
-                            .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
-                    }
-                }
-//                else if json[key].isArray {
-//                    // Display arrays by recursively calling JSONView for each element
-//                    Text("\(key):").bold()
-//                    ForEach(0..<json[key].arrayValue.count, id: \.self) { index in
-//                        JSONView(json: json[key][index])
-//                            .padding(.leading, 10)
-//                    }
-//                } else if json[key].isDictionary {
-//                    // Display nested dictionaries recursively
-//                    Text("\(key):").bold()
-//                    JSONView(json: json[key])
-//                        .padding(.leading, 10)
-//                }
-                else {
-                    // Display other types (e.g., null)
-                    HStack {
-                        Text("\(key):").bold()
-                        Text("null")
-                    }
-                }
+            let keys = Array(json.dictionaryValue.keys).sorted()
+            ForEach(keys, id: \.self) { key in
+                JSONValueView(key: key, value: json[key])
             }
         }
     }
 }
+
+struct JSONValueView: View {
+    let key: String
+    let value: JSON
+
+    var body: some View {
+        if value.number != nil {
+            JSONNumberView(key: key, value: value)
+        } else if value.rawValue is String {
+            JSONStringView(key: key, value: value)
+        } else if value.array != nil {
+            JSONArrayView(key: key, array: value.arrayValue)
+        } else if value.dictionary != nil {
+            JSONObjectView(key: key, object: value)
+        } else {
+            HStack {
+                Text("\(key):").bold()
+                Text("null")
+            }
+        }
+    }
+}
+
+struct JSONNumberView: View {
+    let key: String
+    let value: JSON
+
+    var body: some View {
+        HStack {
+            Text("\(key):").bold()
+            Text("\(value.numberValue)")
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
+struct JSONStringView: View {
+    let key: String
+    let value: JSON
+
+    var body: some View {
+        HStack {
+            Text("\(key):").bold()
+            Text(value.stringValue)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+}
+
+struct JSONArrayView: View {
+    let key: String
+    let array: [JSON]
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(key):").bold()
+            ForEach(0..<array.count, id: \.self) { index in
+                JSONValueView(key: "\(key)[\(index)]", value: array[index])
+                    .padding(.leading, 10)
+            }
+        }
+    }
+}
+
+struct JSONObjectView: View {
+    let key: String
+    let object: JSON
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text("\(key):").bold()
+            ForEach(object.dictionaryValue.keys.sorted(), id: \.self) { nestedKey in
+                JSONValueView(key: nestedKey, value: object[nestedKey])
+                    .padding(.leading, 10)
+            }
+        }
+    }
+}
+
+
 
 #Preview("DetailView Preview") {
     let sampleData = JSON([
