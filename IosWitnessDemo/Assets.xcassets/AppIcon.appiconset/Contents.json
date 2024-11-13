@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "android-chrome-512x512.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -12,6 +13,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "android-chrome-512x512 1.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -23,6 +25,7 @@
           "value" : "tinted"
         }
       ],
+      "filename" : "android-chrome-512x512 2.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
