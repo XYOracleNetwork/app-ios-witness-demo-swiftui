@@ -2,7 +2,7 @@ import SwiftUI
 import SwiftyJSON
 
 struct DetailView: View {
-    let item: Item
+    let item: JsonPayloadItem
 
     var body: some View {
         ScrollView {
@@ -40,7 +40,7 @@ struct DetailView: View {
         "_hash": "11480c95ebd71e5b9814871c9756bd2e4e63455d331f8b7ed8ee4a3179689212",
         "_timestamp": 1731465636489
     ])
-    let sampleItem = Item(json: sampleData)
+    let sampleItem = JsonPayloadItem(json: sampleData)
     NavigationView {
         DetailView(item: sampleItem)
     }

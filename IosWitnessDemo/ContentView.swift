@@ -3,8 +3,8 @@ import SwiftyJSON
 
 struct ContentView: View {
     // Sample JSON data
-    let items: [Item] = [
-        Item(
+    let items: [JsonPayloadItem] = [
+        JsonPayloadItem(
             json: JSON([
                 "schema": "network.xyo.system.info",
                 "network": [:], // Empty dictionary
@@ -28,7 +28,7 @@ struct ContentView: View {
                 "_timestamp": 1731465636489
             ])
         ),
-        Item(
+        JsonPayloadItem(
             json: JSON([
                 "schema": "network.xyo.basic",
                 "_$hash": "540756396cdc97625f245c789d56e4f26306e1fecc2d409a9a7a5ac9fcc50205",

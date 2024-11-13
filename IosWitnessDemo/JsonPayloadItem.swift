@@ -1,7 +1,7 @@
 import Foundation
 import SwiftyJSON
 
-struct Item: Identifiable {
+struct JsonPayloadItem: Identifiable {
     // Using `_hash` as the unique ID
     var id: String {
         json["_hash"].stringValue
