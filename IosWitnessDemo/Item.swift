@@ -13,6 +13,6 @@ struct Item: Identifiable {
     let id = UUID()
     let json: JSON
     var name: String {
-        json["name"].stringValue
+        json["_hash"].stringValue
     }
 }
