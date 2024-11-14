@@ -56,12 +56,12 @@ struct ContentView: View {
                 // Buttons fixed at the bottom
                 VStack(spacing: 20) {
                     Button("Basic Witness") {
-                        let basicWitness = XyoBasicWitness {
+                        let witness = XyoBasicWitness {
                             XyoPayload("network.xyo.basic")
                         }
                         
                         // Observe and add result to items
-                        let observedPayloads = basicWitness.observe()
+                        let observedPayloads = witness.observe()
                         for payload in observedPayloads {
                             if let jsonPayload = payload.toJSON(){
                                 let p = JsonPayloadItem(json: jsonPayload)
@@ -71,7 +71,16 @@ struct ContentView: View {
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("System Info Witness") {
-
+                        let witness = XyoSystemInfoWitness(allowPathMonitor: true)
+                        
+                        // Observe and add result to items
+                        let observedPayloads = witness.observe()
+                        for payload in observedPayloads {
+                            if let jsonPayload = payload.toJSON(){
+                                let p = JsonPayloadItem(json: jsonPayload)
+                                items.append(p)
+                            }
+                        }
                     }
                     .buttonStyle(BorderedButtonStyle())
                 }
