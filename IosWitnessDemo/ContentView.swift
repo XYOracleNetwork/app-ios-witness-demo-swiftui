@@ -59,34 +59,27 @@ struct ContentView: View {
                         let witness = XyoBasicWitness {
                             XyoPayload("network.xyo.basic")
                         }
-                        
-                        // Observe and add result to items
-                        let observedPayloads = witness.observe()
-                        for payload in observedPayloads {
-                            if let jsonPayload = payload.toJSON(){
-                                let p = JsonPayloadItem(json: jsonPayload)
-                                items.append(p)
-                            }
-                        }
+                        observeAndAddPayloads(from: witness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("System Info Witness") {
                         let witness = XyoSystemInfoWitness(allowPathMonitor: true)
-                        
-                        // Observe and add result to items
-                        let observedPayloads = witness.observe()
-                        for payload in observedPayloads {
-                            if let jsonPayload = payload.toJSON(){
-                                let p = JsonPayloadItem(json: jsonPayload)
-                                items.append(p)
-                            }
-                        }
+                        observeAndAddPayloads(from: witness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                 }
                 .padding(.bottom, 10)
             }
             .navigationTitle("Witnessed Results")
+        }
+    }
+    private func observeAndAddPayloads<T: AbstractWitness>(from witness: T) {
+        let observedPayloads = witness.observe()
+        for payload in observedPayloads {
+            if let jsonPayload = payload.toJSON() {
+                let jsonItem = JsonPayloadItem(json: jsonPayload)
+                items.append(jsonItem)
+            }
         }
     }
 }
