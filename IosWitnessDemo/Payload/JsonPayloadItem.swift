@@ -2,10 +2,11 @@ import Foundation
 import SwiftyJSON
 
 struct JsonPayloadItem: Identifiable {
-    // Using `_hash` as the unique ID
-    var id: String {
-        json["_hash"].stringValue
-    }
+//    // Using `_hash` as the unique ID
+//    var id: String {
+//        json["_hash"].stringValue
+//    }
+    let id: UUID = UUID()
     
     let json: JSON
     
