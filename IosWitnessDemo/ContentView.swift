@@ -1,9 +1,9 @@
 import SwiftUI
+import XyoClient
 import SwiftyJSON
 
 struct ContentView: View {
-    // Sample JSON data
-    let items: [JsonPayloadItem] = [
+    @State private var items: [JsonPayloadItem] = [
         JsonPayloadItem(
             json: JSON([
                 "schema": "network.xyo.system.info",
@@ -56,11 +56,22 @@ struct ContentView: View {
                 // Buttons fixed at the bottom
                 VStack(spacing: 20) {
                     Button("Basic Witness") {
-                        // Action 1
+                        let basicWitness = XyoBasicWitness {
+                            XyoPayload("network.xyo.basic")
+                        }
+                        
+                        // Observe and add result to items
+                        let observedPayloads = basicWitness.observe()
+                        for payload in observedPayloads {
+                            if let jsonPayload = payload.toJSON(){
+                                let p = JsonPayloadItem(json: jsonPayload)
+                                items.append(p)
+                            }
+                        }
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("System Info Witness") {
-                        // Action 2
+
                     }
                     .buttonStyle(BorderedButtonStyle())
                 }
