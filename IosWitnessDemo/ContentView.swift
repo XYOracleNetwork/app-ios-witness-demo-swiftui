@@ -2,6 +2,7 @@ import os
 import SwiftUI
 import XyoClient
 import SwiftyJSON
+import CoreLocation
 
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
@@ -20,6 +21,12 @@ let panel = XyoPanel(
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
 
+    
+    @State private var location: CLLocation?
+    @State private var error: Error?
+    private let locationService = LocationService()
+    
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -37,6 +44,20 @@ struct ContentView: View {
                 
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
+                    Button("Witness Location") {
+                        locationService.requestAuthorization()
+                        locationService.requestLocation { result in
+                            DispatchQueue.main.async {
+                                switch result {
+                                case .success(let location):
+                                    self.location = location
+                                case .failure(let error):
+                                    self.error = error
+                                }
+                            }
+                        }
+                    }
+                    .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
                             do {
