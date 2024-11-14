@@ -1,3 +1,4 @@
+import os
 import SwiftUI
 import XyoClient
 import SwiftyJSON
@@ -37,6 +38,8 @@ let samplePayloads: [JsonPayloadItem] = [
     )
 ]
 
+let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
+
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
 
@@ -58,20 +61,38 @@ struct ContentView: View {
                 // Buttons fixed at the bottom
                 VStack(spacing: 20) {
                     Button("Witness Basic") {
-                        let witness = XyoBasicWitness {
+                        let basicWitness = XyoBasicWitness {
                             XyoPayload("network.xyo.basic")
                         }
-                        observeAndAddPayloads(from: witness)
+                        observeAndAddResults(from: basicWitness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("Witness System Info ") {
                         let witness = XyoSystemInfoWitness(allowPathMonitor: true)
-                        observeAndAddPayloads(from: witness)
+                        observeAndAddResults(from: witness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
-                        let witness = XyoSystemInfoWitness(allowPathMonitor: true)
-                        observeAndAddPayloads(from: witness)
+                        Task {
+                            let apiDomain = "http://localhost:8080"
+                            let archive = "Archivist"
+                            let panel = XyoPanel(
+                                archive: archive,
+                                apiDomain: apiDomain,
+                                witnesses: [
+                                    XyoBasicWitness(observer: {
+                                        return XyoPayload("network.xyo.basic")
+                                    })
+                                ]
+                            )
+                            do {
+                                let result = try await panel.report()
+                                addWitnessedResults(observations: result)
+                            } catch {
+                                
+                                logger.debug("\(error)")
+                            }
+                        }
                     }
                     .buttonStyle(BorderedButtonStyle())
                 }
@@ -80,9 +101,12 @@ struct ContentView: View {
             .navigationTitle("Witnessed Results")
         }
     }
-    private func observeAndAddPayloads<T: AbstractWitness>(from witness: T) {
+    private func observeAndAddResults<T: AbstractWitness>(from witness: T) {
         let observedPayloads = witness.observe()
-        for payload in observedPayloads {
+        addWitnessedResults(observations: observedPayloads)
+    }
+    private func addWitnessedResults(observations: [XyoPayload]) {
+        for payload in observations {
             if let jsonPayload = payload.toJSON() {
                 let jsonItem = JsonPayloadItem(json: jsonPayload)
                 payloads.append(jsonItem)
