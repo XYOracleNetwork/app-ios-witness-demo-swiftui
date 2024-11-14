@@ -27,24 +27,16 @@ struct ContentView: View {
                 List(payloads) { item in
                     NavigationLink(destination: PayloadDetailView(item: item)) {
                         Text(item.schema)
-                            .lineLimit(1) // Limit to one line
-                            .truncationMode(.tail) // Truncate at the end and add "..."
-                            .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
                 
                 Spacer()
                 
-                // Buttons fixed at the bottom
+                // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
-                    Button("Witness Basic") {
-                        observeAndAddResults(from: basicWitness)
-                    }
-                    .buttonStyle(BorderedButtonStyle())
-                    Button("Witness System Info ") {
-                        observeAndAddResults(from: systemInfoWitness)
-                    }
-                    .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
                             do {
