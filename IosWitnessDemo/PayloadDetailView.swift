@@ -1,7 +1,7 @@
 import SwiftUI
 import SwiftyJSON
 
-struct DetailView: View {
+struct PayloadDetailView: View {
     let item: JsonPayloadItem
 
     var body: some View {
@@ -42,6 +42,6 @@ struct DetailView: View {
     ])
     let sampleItem = JsonPayloadItem(json: sampleData)
     NavigationView {
-        DetailView(item: sampleItem)
+        PayloadDetailView(item: sampleItem)
     }
 }
