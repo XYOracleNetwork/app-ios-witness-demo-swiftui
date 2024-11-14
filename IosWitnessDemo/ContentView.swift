@@ -38,13 +38,13 @@ let samplePayloads: [JsonPayloadItem] = [
 ]
 
 struct ContentView: View {
-    @State private var items: [JsonPayloadItem] = []
+    @State private var payloads: [JsonPayloadItem] = []
 
     var body: some View {
         NavigationView {
             VStack {
                 // List view with scrollable content
-                List(items) { item in
+                List(payloads) { item in
                     NavigationLink(destination: PayloadDetailView(item: item)) {
                         Text(item.schema)
                             .lineLimit(1) // Limit to one line
@@ -57,14 +57,19 @@ struct ContentView: View {
                 
                 // Buttons fixed at the bottom
                 VStack(spacing: 20) {
-                    Button("Basic Witness") {
+                    Button("Witness Basic") {
                         let witness = XyoBasicWitness {
                             XyoPayload("network.xyo.basic")
                         }
                         observeAndAddPayloads(from: witness)
                     }
                     .buttonStyle(BorderedButtonStyle())
-                    Button("System Info Witness") {
+                    Button("Witness System Info ") {
+                        let witness = XyoSystemInfoWitness(allowPathMonitor: true)
+                        observeAndAddPayloads(from: witness)
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    Button("Witness All") {
                         let witness = XyoSystemInfoWitness(allowPathMonitor: true)
                         observeAndAddPayloads(from: witness)
                     }
@@ -80,7 +85,7 @@ struct ContentView: View {
         for payload in observedPayloads {
             if let jsonPayload = payload.toJSON() {
                 let jsonItem = JsonPayloadItem(json: jsonPayload)
-                items.append(jsonItem)
+                payloads.append(jsonItem)
             }
         }
     }
