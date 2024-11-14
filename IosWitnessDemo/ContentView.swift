@@ -45,7 +45,7 @@ struct ContentView: View {
             VStack {
                 // List view with scrollable content
                 List(items) { item in
-                    NavigationLink(destination: DetailView(item: item)) {
+                    NavigationLink(destination: PayloadDetailView(item: item)) {
                         Text(item.schema)
                             .lineLimit(1) // Limit to one line
                             .truncationMode(.tail) // Truncate at the end and add "..."
