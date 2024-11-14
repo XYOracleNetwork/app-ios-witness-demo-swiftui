@@ -44,7 +44,7 @@ struct ContentView: View {
                 // List view with scrollable content
                 List(items) { item in
                     NavigationLink(destination: DetailView(item: item)) {
-                        Text(item.hash)
+                        Text(item.schema)
                             .lineLimit(1) // Limit to one line
                             .truncationMode(.tail) // Truncate at the end and add "..."
                             .frame(maxWidth: .infinity, alignment: .leading) // Ensure full width
