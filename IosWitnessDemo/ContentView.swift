@@ -39,6 +39,17 @@ let samplePayloads: [JsonPayloadItem] = [
 ]
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
+let basicWitness = XyoBasicWitness {
+    XyoPayload("network.xyo.basic")
+}
+let systemInfoWitness = XyoSystemInfoWitness(allowPathMonitor: true)
+let apiDomain = "http://localhost:8080"
+let archive = "Archivist"
+let panel = XyoPanel(
+    archive: archive,
+    apiDomain: apiDomain,
+    witnesses: [basicWitness, systemInfoWitness]
+)
 
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
@@ -61,35 +72,19 @@ struct ContentView: View {
                 // Buttons fixed at the bottom
                 VStack(spacing: 20) {
                     Button("Witness Basic") {
-                        let basicWitness = XyoBasicWitness {
-                            XyoPayload("network.xyo.basic")
-                        }
                         observeAndAddResults(from: basicWitness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("Witness System Info ") {
-                        let witness = XyoSystemInfoWitness(allowPathMonitor: true)
-                        observeAndAddResults(from: witness)
+                        observeAndAddResults(from: systemInfoWitness)
                     }
                     .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
-                            let apiDomain = "http://localhost:8080"
-                            let archive = "Archivist"
-                            let panel = XyoPanel(
-                                archive: archive,
-                                apiDomain: apiDomain,
-                                witnesses: [
-                                    XyoBasicWitness(observer: {
-                                        return XyoPayload("network.xyo.basic")
-                                    })
-                                ]
-                            )
                             do {
                                 let result = try await panel.report()
                                 addWitnessedResults(observations: result)
                             } catch {
-                                
                                 logger.debug("\(error)")
                             }
                         }
