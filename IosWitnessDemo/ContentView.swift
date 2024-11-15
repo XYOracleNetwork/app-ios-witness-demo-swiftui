@@ -2,8 +2,6 @@ import os
 import SwiftUI
 import XyoClient
 import SwiftyJSON
-import CoreLocation
-
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
 let basicWitness = BasicWitness {
@@ -55,10 +53,6 @@ struct ContentView: View {
             }
             .navigationTitle("Witnessed Results")
         }
-    }
-    private func observeAndAddResults<T: WitnessSync>(from witness: T) {
-        let observedPayloads = witness.observe()
-        addWitnessedResults(observations: observedPayloads)
     }
     private func addWitnessedResults(observations: [Payload]) {
         for payload in observations {
