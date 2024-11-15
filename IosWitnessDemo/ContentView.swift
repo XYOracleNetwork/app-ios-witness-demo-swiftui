@@ -16,7 +16,7 @@ let archive = "Archivist"
 let panel = XyoPanel(
     archive: archive,
     apiDomain: apiDomain,
-    witnesses: [basicWitness, systemInfoWitness]
+    witnesses: [basicWitness, systemInfoWitness, locationWitness]
 )
 
 struct ContentView: View {
@@ -39,17 +39,17 @@ struct ContentView: View {
                 
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
-                    Button("Witness Location") {
-                        Task {
-                            do {
-                                let result = try await locationWitness.observe()
-                                addWitnessedResults(observations: result)
-                            } catch {
-                                logger.debug("\(error)")
-                            }
-                        }
-                    }
-                    .buttonStyle(BorderedButtonStyle())
+//                    Button("Witness Location") {
+//                        Task {
+//                            do {
+//                                let result = try await locationWitness.observe()
+//                                addWitnessedResults(observations: result)
+//                            } catch {
+//                                logger.debug("\(error)")
+//                            }
+//                        }
+//                    }
+//                    .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
                             do {
