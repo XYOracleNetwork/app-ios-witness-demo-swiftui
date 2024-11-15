@@ -39,17 +39,6 @@ struct ContentView: View {
                 
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
-//                    Button("Witness Location") {
-//                        Task {
-//                            do {
-//                                let result = try await locationWitness.observe()
-//                                addWitnessedResults(observations: result)
-//                            } catch {
-//                                logger.debug("\(error)")
-//                            }
-//                        }
-//                    }
-//                    .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
                             do {
