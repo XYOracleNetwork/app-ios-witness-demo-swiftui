@@ -6,10 +6,10 @@ import CoreLocation
 
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
-let basicWitness = XyoBasicWitness {
-    XyoPayload("network.xyo.basic")
+let basicWitness = BasicWitness {
+    Payload("network.xyo.basic")
 }
-let systemInfoWitness = XyoSystemInfoWitness(allowPathMonitor: true)
+let systemInfoWitness = SystemInfoWitness(allowPathMonitor: true)
 let apiDomain = "https://beta.api.archivist.xyo.network"
 let archive = "Archivist"
 let panel = XyoPanel(
@@ -75,11 +75,11 @@ struct ContentView: View {
             .navigationTitle("Witnessed Results")
         }
     }
-    private func observeAndAddResults<T: AbstractWitness>(from witness: T) {
+    private func observeAndAddResults<T: WitnessSync>(from witness: T) {
         let observedPayloads = witness.observe()
         addWitnessedResults(observations: observedPayloads)
     }
-    private func addWitnessedResults(observations: [XyoPayload]) {
+    private func addWitnessedResults(observations: [Payload]) {
         for payload in observations {
             if let jsonPayload = payload.toJSON() {
                 let jsonItem = JsonPayloadItem(json: jsonPayload)
