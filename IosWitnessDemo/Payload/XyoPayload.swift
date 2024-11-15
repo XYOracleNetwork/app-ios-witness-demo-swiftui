@@ -2,7 +2,7 @@ import Foundation
 import SwiftyJSON
 import XyoClient
 
-extension XyoPayload {
+extension Payload {
     func toJSON() -> JSON? {
         do {
             let data = try JSONEncoder().encode(self)

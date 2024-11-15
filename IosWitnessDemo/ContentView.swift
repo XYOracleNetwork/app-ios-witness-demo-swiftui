@@ -2,30 +2,23 @@ import os
 import SwiftUI
 import XyoClient
 import SwiftyJSON
-import CoreLocation
-
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
-let basicWitness = XyoBasicWitness {
-    XyoPayload("network.xyo.basic")
+let basicWitness = BasicWitness {
+    Payload("network.xyo.basic")
 }
-let systemInfoWitness = XyoSystemInfoWitness(allowPathMonitor: true)
+let systemInfoWitness = SystemInfoWitness(allowPathMonitor: true)
+let locationWitness = LocationWitness()
 let apiDomain = "https://beta.api.archivist.xyo.network"
 let archive = "Archivist"
 let panel = XyoPanel(
     archive: archive,
     apiDomain: apiDomain,
-    witnesses: [basicWitness, systemInfoWitness]
+    witnesses: [basicWitness, systemInfoWitness, locationWitness]
 )
 
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
-
-    
-    @State private var location: CLLocation?
-    @State private var error: Error?
-    private let locationService = LocationService()
-    
     
     var body: some View {
         NavigationView {
@@ -44,20 +37,6 @@ struct ContentView: View {
                 
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
-                    Button("Witness Location") {
-                        locationService.requestAuthorization()
-                        locationService.requestLocation { result in
-                            DispatchQueue.main.async {
-                                switch result {
-                                case .success(let location):
-                                    self.location = location
-                                case .failure(let error):
-                                    self.error = error
-                                }
-                            }
-                        }
-                    }
-                    .buttonStyle(BorderedButtonStyle())
                     Button("Witness All") {
                         Task {
                             do {
@@ -75,11 +54,7 @@ struct ContentView: View {
             .navigationTitle("Witnessed Results")
         }
     }
-    private func observeAndAddResults<T: AbstractWitness>(from witness: T) {
-        let observedPayloads = witness.observe()
-        addWitnessedResults(observations: observedPayloads)
-    }
-    private func addWitnessedResults(observations: [XyoPayload]) {
+    private func addWitnessedResults(observations: [Payload]) {
         for payload in observations {
             if let jsonPayload = payload.toJSON() {
                 let jsonItem = JsonPayloadItem(json: jsonPayload)
