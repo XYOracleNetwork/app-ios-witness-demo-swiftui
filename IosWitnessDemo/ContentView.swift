@@ -10,6 +10,7 @@ let basicWitness = BasicWitness {
     Payload("network.xyo.basic")
 }
 let systemInfoWitness = SystemInfoWitness(allowPathMonitor: true)
+let locationWitness = LocationWitness()
 let apiDomain = "https://beta.api.archivist.xyo.network"
 let archive = "Archivist"
 let panel = XyoPanel(
@@ -20,12 +21,6 @@ let panel = XyoPanel(
 
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
-
-    
-    @State private var location: CLLocation?
-    @State private var error: Error?
-    private let locationService = LocationService()
-    
     
     var body: some View {
         NavigationView {
@@ -45,15 +40,12 @@ struct ContentView: View {
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
                     Button("Witness Location") {
-                        locationService.requestAuthorization()
-                        locationService.requestLocation { result in
-                            DispatchQueue.main.async {
-                                switch result {
-                                case .success(let location):
-                                    self.location = location
-                                case .failure(let error):
-                                    self.error = error
-                                }
+                        Task {
+                            do {
+                                let result = try await locationWitness.observe()
+                                addWitnessedResults(observations: result)
+                            } catch {
+                                logger.debug("\(error)")
                             }
                         }
                     }
