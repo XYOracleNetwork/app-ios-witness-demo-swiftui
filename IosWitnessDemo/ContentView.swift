@@ -18,6 +18,7 @@ let panel = XyoPanel(
 )
 
 let account = AccountServices.getNamedAccount(name: "default")
+//let address = account.addressHex
 
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
@@ -41,12 +42,9 @@ struct ContentView: View {
                 VStack(spacing: 20) {
                     Button("Witness All") {
                         Task {
-                            do {
-                                let result = try await panel.report()
-                                addWitnessedResults(observations: result)
-                            } catch {
-                                logger.debug("\(error)")
-                            }
+                            let result =  await panel.report()
+                            addWitnessedResults(observations: result)
+
                         }
                     }
                     .buttonStyle(BorderedButtonStyle())
