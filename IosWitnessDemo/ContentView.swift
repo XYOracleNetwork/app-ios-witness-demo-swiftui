@@ -18,7 +18,6 @@ let panel = XyoPanel(
 )
 
 let account = AccountServices.getNamedAccount(name: "default")
-//let address = account.addressHex
 
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
