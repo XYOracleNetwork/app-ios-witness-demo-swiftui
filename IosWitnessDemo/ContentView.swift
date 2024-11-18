@@ -17,6 +17,8 @@ let panel = XyoPanel(
     witnesses: [basicWitness, systemInfoWitness, locationWitness]
 )
 
+let account = AccountServices.getNamedAccount(name: "default")
+
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
     
