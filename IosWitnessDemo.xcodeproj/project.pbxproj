@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D20B9992CEC066D0021D7DF /* XyoClient in Frameworks */ = {isa = PBXBuildFile; productRef = 5D20B9982CEC066D0021D7DF /* XyoClient */; };
 		5D3CC92B2CE4F0440003DC41 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 5D3CC92A2CE4F0440003DC41 /* SwiftyJSON */; };
-		5DCF0D892CE57206006CDC0C /* XyoClient in Frameworks */ = {isa = PBXBuildFile; productRef = 5DCF0D882CE57206006CDC0C /* XyoClient */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,7 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DCF0D892CE57206006CDC0C /* XyoClient in Frameworks */,
+				5D20B9992CEC066D0021D7DF /* XyoClient in Frameworks */,
 				5D3CC92B2CE4F0440003DC41 /* SwiftyJSON in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,7 +120,7 @@
 			name = IosWitnessDemo;
 			packageProductDependencies = (
 				5D3CC92A2CE4F0440003DC41 /* SwiftyJSON */,
-				5DCF0D882CE57206006CDC0C /* XyoClient */,
+				5D20B9982CEC066D0021D7DF /* XyoClient */,
 			);
 			productName = IosWitnessDemo;
 			productReference = 5D66BA602CE4E7390050CA89 /* IosWitnessDemo.app */;
@@ -206,7 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				5D3CC9292CE4F0440003DC41 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				5DCF0D872CE57206006CDC0C /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */,
+				5D20B9972CEC066D0021D7DF /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5D66BA612CE4E7390050CA89 /* Products */;
@@ -571,6 +571,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5D20B9972CEC066D0021D7DF /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/XYOracleNetwork/sdk-xyo-client-swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.3.8;
+			};
+		};
 		5D3CC9292CE4F0440003DC41 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -579,26 +587,18 @@
 				minimumVersion = 5.0.2;
 			};
 		};
-		5DCF0D872CE57206006CDC0C /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/XYOracleNetwork/sdk-xyo-client-swift";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 2.3.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5D20B9982CEC066D0021D7DF /* XyoClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5D20B9972CEC066D0021D7DF /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */;
+			productName = XyoClient;
+		};
 		5D3CC92A2CE4F0440003DC41 /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5D3CC9292CE4F0440003DC41 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		5DCF0D882CE57206006CDC0C /* XyoClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5DCF0D872CE57206006CDC0C /* XCRemoteSwiftPackageReference "sdk-xyo-client-swift" */;
-			productName = XyoClient;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

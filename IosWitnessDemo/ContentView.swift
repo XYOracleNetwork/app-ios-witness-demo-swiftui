@@ -17,6 +17,8 @@ let panel = XyoPanel(
     witnesses: [basicWitness, systemInfoWitness, locationWitness]
 )
 
+let account = AccountServices.getNamedAccount(name: "default")
+
 struct ContentView: View {
     @State private var payloads: [JsonPayloadItem] = []
     
@@ -34,17 +36,32 @@ struct ContentView: View {
                 }
                 
                 Spacer()
+
+                HStack {
+                    Text("Address:").bold()
+                    Text("\(account.address)")
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button(action: {
+                        // Copy the address to the clipboard
+                        UIPasteboard.general.string = account.address
+                    }) {
+                        Image(systemName: "doc.on.doc")  // Clipboard icon
+//                            .foregroundColor(.blue)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                }.padding(.horizontal, 16)
+
+                Spacer()
                 
                 // Fixed buttons at bottom of screen
                 VStack(spacing: 20) {
                     Button("Witness All") {
                         Task {
-                            do {
-                                let result = try await panel.report()
-                                addWitnessedResults(observations: result)
-                            } catch {
-                                logger.debug("\(error)")
-                            }
+                            let result =  await panel.report()
+                            addWitnessedResults(observations: result)
+
                         }
                     }
                     .buttonStyle(BorderedButtonStyle())
