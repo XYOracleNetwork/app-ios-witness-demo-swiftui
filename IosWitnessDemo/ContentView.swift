@@ -48,9 +48,9 @@ struct ContentView: View {
                         UIPasteboard.general.string = account.address
                     }) {
                         Image(systemName: "doc.on.doc")  // Clipboard icon
-//                            .foregroundColor(.blue)
+                            .foregroundColor(.accentColor)
                     }
-                    .buttonStyle(PlainButtonStyle())
+//                    .buttonStyle(PlainButtonStyle())
                 }.padding(.horizontal, 16)
 
                 Spacer()
