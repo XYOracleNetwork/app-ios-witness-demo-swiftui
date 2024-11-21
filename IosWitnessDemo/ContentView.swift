@@ -5,7 +5,6 @@ import SwiftyJSON
 
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
 
-
 let apiDomain = "https://beta.api.archivist.xyo.network"
 let archive = "Archivist"
 
@@ -31,8 +30,8 @@ struct ContentView: View {
         panel = XyoPanel(
             account: account,
             witnesses: [basicWitness, systemInfoWitness, locationWitness],
-            archive: archive,
-            apiDomain: apiDomain
+            apiDomain: apiDomain,
+            archive: archive
         )
     }
     
