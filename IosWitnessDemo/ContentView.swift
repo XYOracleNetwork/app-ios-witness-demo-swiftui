@@ -6,6 +6,7 @@ import SwiftyJSON
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
 
 let apiDomain = "https://beta.api.archivist.xyo.network"
+// let apiDomain = "http://localhost:8080"
 let archive = "Archivist"
 
 struct ContentView: View {
@@ -29,7 +30,11 @@ struct ContentView: View {
         let locationWitness = LocationWitness()
         panel = XyoPanel(
             account: account,
-            witnesses: [basicWitness, systemInfoWitness, locationWitness],
+            witnesses: [
+                basicWitness,
+                systemInfoWitness,
+                locationWitness
+            ],
             apiDomain: apiDomain,
             archive: archive
         )
@@ -71,6 +76,13 @@ struct ContentView: View {
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                    Button(action: {
+                        // Copy the address to the clipboard
+                        UIPasteboard.general.string = previousHash
+                    }) {
+                        Image(systemName: "doc.on.doc")  // Clipboard icon
+                            .foregroundColor(.accentColor)
+                    }
                 }.padding(.horizontal, 16)
 
                 Spacer()
