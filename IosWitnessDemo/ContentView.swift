@@ -10,7 +10,7 @@ let apiDomain = "https://beta.api.archivist.xyo.network"
 let archive = "Archivist"
 
 struct ContentView: View {
-    private let account: AccountInstance
+    private let panelAccount: AccountInstance
     private let panel: XyoPanel
     
     @State private var payloads: [JsonPayloadItem] = []
@@ -18,18 +18,18 @@ struct ContentView: View {
     
     init(account: AccountInstance? = nil) {
         if let account {
-            self.account = account
+            self.panelAccount = account
         } else {
-            self.account = AccountServices.getNamedAccount(name: "default")
+            self.panelAccount = AccountServices.getNamedAccount(name: "panel")
         }
-        _previousHash = State(initialValue: self.account.previousHash)
+        _previousHash = State(initialValue: self.panelAccount.previousHash)
         let basicWitness = BasicWitness {
             Payload("network.xyo.basic")
         }
         let systemInfoWitness = SystemInfoWitness(allowPathMonitor: true)
         let locationWitness = LocationWitness()
         panel = XyoPanel(
-            account: account,
+            account: self.panelAccount,
             witnesses: [
                 basicWitness,
                 systemInfoWitness,
@@ -57,13 +57,13 @@ struct ContentView: View {
 
                 HStack {
                     Text("Address:").bold()
-                    Text("\(account.address)")
+                    Text("\(self.panelAccount.address)")
                         .lineLimit(1)
                         .truncationMode(.tail)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Button(action: {
                         // Copy the address to the clipboard
-                        UIPasteboard.general.string = account.address
+                        UIPasteboard.general.string = self.panelAccount.address
                     }) {
                         Image(systemName: "doc.on.doc")  // Clipboard icon
                             .foregroundColor(.accentColor)
