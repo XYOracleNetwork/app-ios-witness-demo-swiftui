@@ -8,7 +8,7 @@ let logger = Logger(
 
 let apiDomain = "https://beta.api.archivist.xyo.network"
 //let apiDomain = "http://localhost:8080"
-let archive = "Archivist"
+let apiModule = "Archivist"
 
 struct ContentView: View {
   private let panelAccount: AccountInstance
@@ -37,7 +37,7 @@ struct ContentView: View {
         locationWitness,
       ],
       apiDomain: apiDomain,
-      archive: archive
+      apiModule: apiModule
     )
   }
 
