@@ -6,7 +6,7 @@ import SwiftyJSON
 let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "network.xyo.IosWitnessDemo", category: "debug")
 
 let apiDomain = "https://beta.api.archivist.xyo.network"
-// let apiDomain = "http://localhost:8080"
+//let apiDomain = "http://localhost:8080"
 let archive = "Archivist"
 
 struct ContentView: View {
