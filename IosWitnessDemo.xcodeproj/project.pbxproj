@@ -576,7 +576,7 @@
 			repositoryURL = "https://github.com/XYOracleNetwork/sdk-xyo-client-swift";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 2.3.31;
+				minimumVersion = 3.0.0;
 			};
 		};
 		5D3CC9292CE4F0440003DC41 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
