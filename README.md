@@ -71,7 +71,7 @@ let panel = XyoPanel(
         locationWitness
     ],
     apiDomain: apiDomain,
-    archive: archive
+    apiModule: apiModule
 )
 ```
 
